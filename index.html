@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>IK Humanoid 3D</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070b12;color:#eaf2ff;font-family:Arial,sans-serif}header{min-height:64px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;letter-spacing:1.5px;font-weight:bold;border-bottom:1px solid #1c2c40;background:#080e17;position:sticky;top:0;z-index:5}header .brand{white-space:nowrap;color:#71caff;font-size:14px}header .brand strong{color:#f0f6ff}.top-actions{display:flex;align-items:center;gap:8px}.menu-btn{background:#14243a;border:1px solid #35506e;color:#eaf2ff;padding:9px 12px;border-radius:10px;font-size:12px}.status{font-size:10px;color:#8be0ae;letter-spacing:0;white-space:nowrap}main{max-width:600px;margin:auto;padding:8px 14px 24px}.stage{height:min(66vh,570px);min-height:400px;border:1px solid #24364e;border-radius:22px;overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 48%,rgba(18,29,50,.55),transparent 58%),radial-gradient(ellipse at 18% 18%,rgba(20,35,66,.22),transparent 42%),#010207;isolation:isolate}.stage::before,.stage::after{content:"";position:absolute;inset:-55%;pointer-events:none;z-index:0;background-repeat:repeat;will-change:transform}.stage::before{opacity:.78;background-image:radial-gradient(1px 1px at 24px 38px,#fff 98%,transparent),radial-gradient(1px 1px at 112px 164px,#cfe4ff 98%,transparent),radial-gradient(1.4px 1.4px at 188px 82px,#fff 98%,transparent),radial-gradient(1px 1px at 276px 218px,#d8e6ff 98%,transparent),radial-gradient(1px 1px at 338px 44px,#fff 98%,transparent),radial-gradient(1.2px 1.2px at 420px 144px,#b9d5ff 98%,transparent);background-size:470px 280px;animation:spaceDrift 115s linear infinite}.stage::after{opacity:.48;background-image:radial-gradient(1px 1px at 42px 92px,#fff 98%,transparent),radial-gradient(1.3px 1.3px at 154px 28px,#dceaff 98%,transparent),radial-gradient(1px 1px at 226px 186px,#fff 98%,transparent),radial-gradient(1.5px 1.5px at 312px 112px,#c8dcff 98%,transparent),radial-gradient(1px 1px at 388px 236px,#fff 98%,transparent),linear-gradient(125deg,transparent 48.8%,rgba(180,210,255,.45) 49.8%,rgba(180,210,255,.45) 50%,transparent 51%);background-size:430px 310px,430px 310px,430px 310px,430px 310px,430px 310px,900px 900px;animation:spaceDriftBack 165s linear infinite}.stage canvas{position:relative;z-index:1;width:100%;height:100%;display:block;touch-action:pan-y;background:transparent}.label{position:absolute;z-index:2;bottom:12px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:2px;color:#9bb5d1;pointer-events:none;text-shadow:0 1px 5px #000}@keyframes spaceDrift{from{transform:translate3d(0,0,0) rotate(0deg)}to{transform:translate3d(-180px,115px,0) rotate(2deg)}}@keyframes spaceDriftBack{from{transform:translate3d(0,0,0)}to{transform:translate3d(130px,-95px,0)}}@media(prefers-reduced-motion:reduce){.stage::before,.stage::after{animation:none}}.camera-box{margin-bottom:14px;padding:12px;border:1px solid #2b405b;border-radius:13px;background:#0b1421}.camera-head{display:flex;justify-content:space-between;align-items:center;color:#dcecff;font-size:12px;letter-spacing:1px;margin-bottom:9px}.camera-head span{color:#f0bd77;font-size:10px}.camera-box video{display:none;width:100%;max-height:260px;object-fit:cover;border-radius:10px;background:#02050a;transform:scaleX(-1)}.camera-box video.active{display:block}.camera-actions{display:flex;gap:8px;margin-top:9px;flex-wrap:wrap}.camera-actions button{background:#1a2b42;border:1px solid #456487;color:#eaf2ff;padding:10px 12px;border-radius:9px}.camera-actions button:disabled{opacity:.45}.camera-actions #cameraToggle.active{background:#762c3b;border-color:#b34b60}.panel{margin-top:13px;background:#101827;border:1px solid #263951;border-radius:18px;padding:14px}.chat{height:115px;overflow:auto;font-size:14px;line-height:1.45}.msg{margin:7px 0}.you{color:#8fbaff}.bot{color:#c9e8ff}.controls{display:flex;gap:8px;margin-top:10px}.controls input{min-width:0;flex:1;background:#080e18;border:1px solid #344862;border-radius:11px;color:white;padding:12px;font-size:15px}.controls button{border:0;border-radius:11px;background:#2869d9;color:white;padding:11px 14px;font-weight:bold}.controls .mic{background:#173a65;border:1px solid #397bc8}.hint{font-size:11px;color:#91a5be;line-height:1.45;margin-top:10px} .tools{display:flex;gap:8px;margin-top:9px}.tools button{background:#1a2b42;border:1px solid #35506e;color:#dcecff;padding:9px 12px}.tools{flex-wrap:wrap}.tools button.active{background:#174b75;border-color:#4aa9ef}.api-note{margin-top:12px;padding:11px 12px;border:1px solid #344862;border-radius:12px;background:#0b1421;font-size:12px;color:#a9bfd7;line-height:1.5}.api-note b{color:#d9efff}.menu-panel{display:none;max-width:600px;margin:10px auto 0;padding:12px 14px;background:#101827;border:1px solid #2b405b;border-radius:14px}.menu-panel.open{display:block}.menu-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.menu-tabs button{background:#1a2b42;border:1px solid #35506e;color:#dcecff;padding:8px 12px;border-radius:9px}.api-settings{display:none}.api-settings.open{display:block}.api-settings label{display:block;color:#b8cce2;font-size:12px;margin:9px 0 5px}.api-settings input{width:100%;background:#080e18;border:1px solid #344862;border-radius:9px;color:white;padding:11px;font-size:14px}.api-settings .save-api{margin-top:10px;background:#2869d9;border:0;border-radius:9px;color:#fff;padding:10px 14px}.api-status{font-size:12px;color:#9fb4ca;line-height:1.5;margin-top:8px}.api-warning{font-size:11px;color:#d4b88b;line-height:1.45;margin-top:8px}.status{white-space:nowrap}.mic.listening{background:#a52d43;animation:pulse 1s infinite}@keyframes pulse{50%{box-shadow:0 0 0 7px #a52d4333}}button{cursor:pointer}button:active{transform:scale(.97)}@media(max-width:420px){header{font-size:12px;padding:12px}.status{font-size:8px}.stage{min-height:360px;height:58vh}.controls{gap:6px}.controls button{padding:10px}.tools button{font-size:11px}}
+
+.left-menu-btn{width:40px;height:38px;padding:8px;display:grid;place-items:center;flex:none}.hamburger{display:flex;flex-direction:column;gap:4px;width:19px}.hamburger i{height:2px;width:19px;background:#eaf2ff;border-radius:2px;display:block}.brand{flex:1;text-align:center}.drawer-backdrop{display:none;position:fixed;inset:0;background:#0009;z-index:19}.drawer-backdrop.open{display:block}.menu-panel{display:block;position:fixed;z-index:20;top:0;left:0;bottom:0;width:min(82vw,330px);max-width:none;height:100dvh;margin:0;padding:16px 14px 24px;border-radius:0 18px 18px 0;border-left:0;overflow-y:auto;transform:translateX(-105%);transition:transform .24s ease;box-shadow:15px 0 40px #0008}.menu-panel.open{transform:translateX(0)}.drawer-head{display:flex;align-items:center;justify-content:space-between;padding:5px 0 18px;border-bottom:1px solid #2b405b;margin-bottom:14px}.drawer-title{font-weight:700;letter-spacing:1.5px;color:#8acfff}.drawer-close{border:0;background:#1a2b42;color:#fff;border-radius:10px;font-size:25px;width:36px;height:36px}.menu-tabs{margin-bottom:14px}.drawer-nav{display:grid;gap:7px}.drawer-nav button{width:100%;text-align:left;padding:12px 13px;border-radius:10px;background:#0b1421;border:1px solid #263951;color:#e5f0ff;font-size:14px}.drawer-nav button:active,.drawer-nav button.selected{background:#17385d;border-color:#4c8ac7}.drawer-content{margin-top:14px;color:#b9cbe0;font-size:13px;line-height:1.55}.drawer-content h3{font-size:14px;color:#eaf2ff;margin:0 0 7px}.drawer-section-title{font-weight:bold;color:#9bd5ff;margin:12px 0 6px}.api-settings{margin-top:14px;padding-top:12px;border-top:1px solid #2b405b}.api-settings.open{display:block}.api-settings:not(.open){display:none}.mic{width:44px;min-width:44px;display:grid;place-items:center}.mic svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.mic.listening svg{stroke:#fff}.history-item{padding:9px;margin:7px 0;background:#0b1421;border:1px solid #263951;border-radius:9px;word-break:break-word}.drawer-action{margin-top:8px;padding:8px 10px;background:#1a2b42;border:1px solid #35506e;color:#eaf2ff;border-radius:8px}
+</style></head><body><header><button class="menu-btn left-menu-btn" id="menuToggle" aria-label="Open menu"><span class="hamburger"><i></i><i></i><i></i></span></button><div class="brand"><strong>IK</strong> HUMANOID</div><div class="top-actions"><div class="status" id="headerStatus">3D SYSTEM ONLINE</div></div></header><div class="drawer-backdrop" id="drawerBackdrop"></div><aside class="menu-panel" id="menuPanel"><div class="drawer-head"><div class="drawer-title">IK HUMANOID</div><button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button></div><div class="menu-tabs"><button id="robotTab">Robot</button><button id="chatTab">Chat</button></div><nav class="drawer-nav"><button data-view="settings">Settings</button><button data-view="history">History</button><button data-view="account">Account</button><button data-view="terms">Terms &amp; Conditions</button><button data-view="help">Help</button><button data-view="support">Support</button></nav><div class="drawer-content" id="drawerContent"></div><div class="api-settings" id="apiSettings"><div class="drawer-section-title">Gemini API Setup</div><label for="geminiKey">Gemini API Key</label><input id="geminiKey" type="password" placeholder="Paste your Gemini API Key" autocomplete="off"><label for="geminiModel">Gemini Model</label><input id="geminiModel" type="text" value="gemini-3.8-flash" autocomplete="off"><button class="save-api" id="saveApi">Save &amp; connect Gemini</button><div class="api-status" id="apiStatus">Gemini API is not connected. Paste your key, then save and connect.</div><div class="api-warning">Security: this direct browser connection is only for private testing. Do not publish this HTML with your key. For a public website, use a private backend so nobody can extract your key. The key is kept only in this browser tab session.</div></div></aside><main>
+<section class="stage"><canvas id="view"></canvas><div class="label" id="caption">DRAG TO ROTATE • PINCH TO ZOOM</div></section>
+<section class="panel">
+<div class="camera-box">
+  <div class="camera-head"><strong>VISION</strong><span id="cameraStatus">CAMERA OFF</span></div>
+  <video id="cameraPreview" autoplay playsinline muted></video>
+  <div class="camera-actions"><button id="cameraToggle" type="button">Enable Camera</button><button id="lookButton" type="button" disabled>Look at Me</button></div>
+  <div class="hint">Your camera stays off until you enable it. IK Humanoid only analyzes a snapshot when you tap “Look at Me”. Turn the camera off anytime.</div>
+</div>
+<div class="chat" id="chat"><div class="msg bot"><b>IK Robot:</b> Hello! I am IK Humanoid. How can I help you today?</div></div><div class="controls"><input id="input" placeholder="Type your message..." autocomplete="off"><button id="send">Send</button><button class="mic" id="mic" aria-label="Start voice input" title="Voice input"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="2.5" width="6" height="12" rx="3"></rect><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3.5M8.5 21.5h7"></path></svg></button></div><div class="tools"><button id="front">Front View</button><button id="reset">Reset View</button><button id="mute">Mute Voice</button><button id="stop">Stop Voice</button><button id="clear">Clear Chat</button></div><div class="api-note"><b>AI BRAIN STATUS</b><br><span id="brainStatus">Add your Gemini API Key in Menu → Settings → Gemini API Setup.</span></div><div class="hint">Drag the robot to rotate it. Pinch to zoom. Tap the microphone to speak or type below. Voice quality depends on the voices installed on your device.</div></section>
+</main>
+<script>
+// Gemini request helper with a hard timeout so the UI never stays on Connecting forever.
+async function geminiGenerate(key, model, payload){
+  const fallbacks=[model, 'gemini-3.8-flash', 'gemini-3.5-flash-lite'];
+  const candidates=[...new Set(fallbacks)];
+  let lastError;
+  for(const candidate of candidates){
+    for(let attempt=0;attempt<2;attempt++){
+      const controller=new AbortController();
+      const timer=setTimeout(()=>controller.abort(),15000);
+      try{
+        const res=await fetch('https://generativelanguage.googleapis.com/v1beta/models/'+encodeURIComponent(candidate)+':generateContent?key='+encodeURIComponent(key),{
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(payload), signal:controller.signal
+        });
+        const data=await res.json().catch(()=>({}));
+        if(!res.ok){const err=new Error(data?.error?.message||('HTTP '+res.status));err.status=res.status;throw err;}
+        return {data,model:candidate};
+      }catch(err){
+        lastError=err;
+        if(err.name==='AbortError') lastError=new Error('Request 15 seconds mein timeout ho gayi. Internet ya Google API response slow/blocked hai.');
+        const temporary=err.status===503||err.status===429||err.status===500||err.name==='AbortError'||/high demand|overload|temporar|unavailable|timeout/i.test(err.message||'');
+        if(!temporary) throw err;
+        if(attempt===0) await new Promise(r=>setTimeout(r,700));
+        else break;
+      }finally{clearTimeout(timer);}
+    }
+  }
+  throw lastError||new Error('Gemini service temporarily unavailable.');
+}
+// API setup: verify the key with a real Gemini request before showing CONNECTED.
+(function(){
+  const save=document.getElementById('saveApi');
+  if(!save) return;
+  save.addEventListener('click', async function(e){
+    e.preventDefault(); e.stopImmediatePropagation();
+    const keyEl=document.getElementById('geminiKey');
+    const modelEl=document.getElementById('geminiModel');
+    const status=document.getElementById('apiStatus');
+    const brain=document.getElementById('brainStatus');
+    const header=document.getElementById('headerStatus');
+    const key=(keyEl.value||'').trim();
+    const model=(modelEl.value||'').trim()||'gemini-3.8-flash';
+    if(!key){status.textContent='Please paste your Gemini API Key first.';brain.textContent=status.textContent;header.textContent='NOT CONNECTED';return;}
+    save.disabled=true; save.textContent='Connecting...';
+    status.textContent='Testing the Gemini API...';brain.textContent=status.textContent;header.textContent='CONNECTING';
+    try{
+      const result=await geminiGenerate(key,model,{contents:[{role:'user',parts:[{text:'Reply with only: OK'}]}],generationConfig:{maxOutputTokens:8}});
+      const data=result.data;
+      const activeModel=result.model;
+      const answer=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||'').join('').trim();
+      if(!answer) throw new Error('The API returned an empty response. Check your key and model access in Google AI Studio.');
+      sessionStorage.setItem('ik_robot_key',key);sessionStorage.setItem('ik_robot_model',activeModel);modelEl.value=activeModel;
+      status.textContent='Connected! Gemini API test successful. Active model: '+activeModel+'. Open Chat and send a message.';
+      brain.textContent='Gemini live AI is connected. You can start chatting.';header.textContent='GEMINI AI CONNECTED';
+      window.dispatchEvent(new CustomEvent('ik-gemini-key-updated'));
+    }catch(err){
+      sessionStorage.removeItem('ik_robot_key');sessionStorage.removeItem('ik_robot_model');
+      const msg=String(err?.message||err);
+      status.textContent='Connection failed: '+msg+' | The key remains in the field. You can try again.';
+      brain.textContent='Gemini could not connect. Check the API status above.';header.textContent='API ERROR';
+    }finally{save.disabled=false;save.textContent='Save & Connect Gemini';}
+  }, true);
+})();
+</script>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+const canvas=document.querySelector('#view'),stage=canvas.parentElement;
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(stage.clientWidth,stage.clientHeight,false);renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.outputColorSpace=THREE.SRGBColorSpace;
+const scene=new THREE.Scene();const camera=new THREE.PerspectiveCamera(34,stage.clientWidth/stage.clientHeight,.1,100);camera.position.set(0,2.2,8.5);
+scene.add(new THREE.HemisphereLight(0xb9dcff,0x1b2636,2));const key=new THREE.DirectionalLight(0xffffff,3);key.position.set(4,7,6);key.castShadow=true;scene.add(key);const rim=new THREE.PointLight(0x238cff,16,10);rim.position.set(-3,2,2);scene.add(rim);
+const mat=(c,metal=0.65,rough=.3)=>new THREE.MeshStandardMaterial({color:c,metalness:metal,roughness:rough});
+const silver=mat(0xb9c5d0,.8,.25),light=mat(0xe3eaf0,.7,.23),dark=mat(0x24364a,.8,.3),black=mat(0x07111d,.4,.2),blue=new THREE.MeshStandardMaterial({color:0x54dfff,emissive:0x087dff,emissiveIntensity:2,metalness:.4,roughness:.2});
+const root=new THREE.Group();scene.add(root);
+function ball(parent,x,y,z,sx,sy,sz,m){let o=new THREE.Mesh(new THREE.SphereGeometry(1,32,24),m);o.position.set(x,y,z);o.scale.set(sx,sy,sz);o.castShadow=true;o.receiveShadow=true;parent.add(o);return o}
+function cyl(parent,x,y,z,rt,rb,h,m,seg=24){let o=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,seg),m);o.position.set(x,y,z);o.castShadow=true;parent.add(o);return o}
+function box(parent,x,y,z,sx,sy,sz,m,r=.1){let o=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),m);o.position.set(x,y,z);o.castShadow=true;parent.add(o);return o}
+const body=new THREE.Group();root.add(body);
+// legs with joints and boots
+for(const side of [-1,1]){const x=side*.39;ball(body,x,-.05,0,.22,.23,.23,dark);box(body,x,-.68,0,.34,.9,.38,silver,.14);ball(body,x,-1.14,0,.2,.2,.2,dark);box(body,x,-1.62,.12,.36,.85,.4,light,.12);box(body,x,-2.08,.25,.46,.2,.78,dark,.12);ball(body,x,-2.3,.37,.29,.16,.48,silver);box(body,x,-2.38,.53,.52,.13,.65,dark,.12)}
+// torso, abdomen, chest
+ball(body,0,.18,0,.72,.3,.38,dark);let chest=box(body,0,.92,0,1.35,1.45,.68,light,.23);ball(body,0,.92,.35,.42,.48,.12,dark);ball(body,0,.94,.47,.29,.34,.06,black);ball(body,0,.94,.535,.105,.105,.045,blue);
+for(let s of [-1,1]){ball(body,s*.56,.55,.18,.12,.19,.13,blue);}
+// shoulders and arms pivot
+const arms=[];
+for(const s of [-1,1]){let arm=new THREE.Group();arm.position.set(s*.83,1.35,0);body.add(arm);arms.push(arm);ball(arm,0,0,0,.27,.28,.28,dark);cyl(arm,0,-.39,0,.19,.22,.62,silver);ball(arm,0,-.75,0,.22,.2,.22,dark);cyl(arm,0,-1.08,0,.15,.18,.58,light);ball(arm,0,-1.42,0,.17,.18,.17,dark);ball(arm,0,-1.63,.03,.19,.22,.14,silver);for(let i=-1;i<=1;i++)cyl(arm,i*.09,-1.83,.05,.045,.045,.25,light,12)}
+// neck and head with more human-like face details
+cyl(body,0,1.82,0,.22,.22,.28,dark);const head=new THREE.Group();head.position.set(0,2.35,0);body.add(head);
+ball(head,0,0,0,.59,.67,.48,silver);ball(head,0,-.13,.365,.47,.39,.16,mat(0x9eabb8,.42,.38));
+// eye sockets, eyeballs, irises, pupils and curved eyebrows
+const eyes=[],brows=[];
+for(const side of [-1,1]){
+  ball(head,side*.22,.105,.485,.165,.125,.055,dark);
+  ball(head,side*.22,.105,.525,.125,.082,.035,mat(0xe8edf1,.12,.22));
+  const iris=ball(head,side*.22,.105,.558,.047,.052,.018,mat(0x3c9bc9,.35,.2));
+  const pupil=ball(head,side*.22,.105,.575,.022,.03,.012,black);
+  eyes.push({iris,pupil,side});
+  const browCurve=new THREE.QuadraticBezierCurve3(new THREE.Vector3(side*.38,.255,.50),new THREE.Vector3(side*.22,.33,.545),new THREE.Vector3(side*.07,.27,.53));
+  const brow=new THREE.Mesh(new THREE.TubeGeometry(browCurve,20,.027,8,false),mat(0x26313d,.25,.5));head.add(brow);brows.push(brow);
+  ball(head,side*.61,-.02,0,.12,.22,.15,dark);
+}
+// subtle nose bridge and natural mouth line
+ball(head,0,-.055,.535,.065,.13,.075,light);
+const mouth= new THREE.Mesh(new THREE.TorusGeometry(.105,.014,8,32,Math.PI),mat(0x26313d,.2,.5));mouth.position.set(0,-.285,.51);mouth.rotation.z=Math.PI;head.add(mouth);
+const floor=new THREE.Mesh(new THREE.CircleGeometry(2.3,64),new THREE.MeshBasicMaterial({color:0x14283c,transparent:true,opacity:.65}));floor.rotation.x=-Math.PI/2;floor.position.y=-2.55;scene.add(floor);
+const ring=new THREE.Mesh(new THREE.TorusGeometry(1.6,.012,8,90),new THREE.MeshBasicMaterial({color:0x347fc4,transparent:true,opacity:.5}));ring.rotation.x=Math.PI/2;ring.position.y=-2.53;scene.add(ring);
+let targetRot=0,drag=false,lastX=0,lastY=0,rotX=0,zoom=8.5,speaking=false,listening=false,muted=false,gazeX=0,gazeY=0;
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}new ResizeObserver(resize).observe(stage);
+let downY=0;canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();gazeX=Math.max(-1,Math.min(1,((e.clientX-r.left)/r.width-.5)*2));gazeY=Math.max(-1,Math.min(1,((e.clientY-r.top)/r.height-.5)*2))});canvas.addEventListener('pointerdown',e=>{drag=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(!drag)return;targetRot+=(e.clientX-lastX)*.012;rotX=Math.max(-.35,Math.min(.35,rotX+(e.clientY-lastY)*.004));lastX=e.clientX;lastY=e.clientY});canvas.addEventListener('pointerup',()=>drag=false);canvas.addEventListener('wheel',e=>{zoom=Math.max(5,Math.min(12,zoom+e.deltaY*.008))},{passive:true});
+document.querySelector('#front').onclick=()=>{targetRot=0;rotX=0};document.querySelector('#reset').onclick=()=>{targetRot=0;rotX=0;zoom=8.5};
+const clock=new THREE.Clock();function animate(){requestAnimationFrame(animate);let t=clock.getElapsedTime();root.rotation.y+=(targetRot-root.rotation.y)*.08;body.rotation.x+=(rotX-body.rotation.x)*.08;camera.position.z+=(zoom-camera.position.z)*.08;head.position.y=2.35+Math.sin(t*1.4)*.025;arms[0].rotation.z=Math.sin(t*1.1)*.035;arms[1].rotation.z=-Math.sin(t*1.1)*.035;if(speaking){head.rotation.y=Math.sin(t*9)*.025;head.scale.y=1+Math.abs(Math.sin(t*13))*.012}else head.rotation.y+=(gazeX*.10-head.rotation.y)*.035;for(const eye of eyes){eye.iris.position.x=eye.side*.22+gazeX*.035;eye.iris.position.y=.105-gazeY*.022;eye.pupil.position.x=eye.side*.22+gazeX*.04;eye.pupil.position.y=.105-gazeY*.025}renderer.render(scene,camera)}animate();
+const chat=document.querySelector('#chat'),input=document.querySelector('#input'),caption=document.querySelector('#caption');
+const micButton=document.querySelector('#mic');
+function addMessage(kind,label,text){const el=document.createElement('div');el.className='msg '+kind;const b=document.createElement('b');b.textContent=label+': ';el.append(b,document.createTextNode(text));chat.append(el);chat.scrollTop=chat.scrollHeight;try{const h=JSON.parse(localStorage.getItem('ik_humanoid_history')||'[]');h.push({kind,label,text,at:Date.now()});localStorage.setItem('ik_humanoid_history',JSON.stringify(h.slice(-300)));}catch(e){}}
+function chooseEnglishVoice(){
+  if(!('speechSynthesis' in window)) return null;
+  const voices=speechSynthesis.getVoices()||[];
+  const english=voices.filter(v=>/^en([_-]|$)/i.test(v.lang));
+  const maleHints=/male|man|david|mark|daniel|james|alex|aaron|guy/i;
+  return english.find(v=>maleHints.test((v.name||'')+' '+(v.voiceURI||''))) ||
+         english.find(v=>/^en[-_]us$/i.test(v.lang)) || english[0] || null;
+}
+if('speechSynthesis' in window){speechSynthesis.onvoiceschanged=()=>{chooseEnglishVoice();};}
+function say(text){
+  addMessage('bot','IK Robot',text);
+  if(muted||!('speechSynthesis'in window))return;
+  speechSynthesis.cancel();
+  const speakNow=()=>{
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='en-US';
+    // Lower pitch and slightly slower pacing create a deeper, calmer sound.
+    // Actual voice quality/gender is controlled by voices installed on the phone.
+    u.rate=.94;u.pitch=.56;u.volume=1;
+    u.voice=chooseEnglishVoice();
+    u.onstart=()=>{speaking=true;caption.textContent='IK HUMANOID • SPEAKING'};
+    u.onend=()=>{speaking=false;caption.textContent='DRAG TO ROTATE • PINCH TO ZOOM'};
+    u.onerror=()=>{speaking=false;caption.textContent='DRAG TO ROTATE • PINCH TO ZOOM'};
+    speechSynthesis.speak(u);
+  };
+  // Android may populate its voice list shortly after the page opens.
+  if(speechSynthesis.getVoices().length) speakNow();
+  else {speechSynthesis.getVoices();setTimeout(speakNow,350);}
+}
+let geminiKey=sessionStorage.getItem('ik_robot_key')||'';
+let geminiModel=sessionStorage.getItem('ik_robot_model')||'gemini-3.8-flash';
+const keyInput=document.querySelector('#geminiKey'),modelInput=document.querySelector('#geminiModel'),apiStatus=document.querySelector('#apiStatus'),brainStatus=document.querySelector('#brainStatus'),headerStatus=document.querySelector('#headerStatus');
+keyInput.value=geminiKey;modelInput.value=geminiModel;
+function setApiState(connected,msg){apiStatus.textContent=msg;brainStatus.textContent=msg;headerStatus.textContent=connected?'GEMINI AI CONNECTED':'LOCAL DEMO MODE'}
+if(geminiKey)setApiState(true,'Gemini key saved for this browser session. Send a message to test it.');
+async function askGemini(raw){
+  const recent=[...chat.querySelectorAll('.msg')].slice(-12).map(el=>el.innerText).join('\n');
+  const prompt='Conversation so far:\n'+recent+'\nLatest user message: '+raw;
+  const result=await geminiGenerate(geminiKey,geminiModel,{
+    systemInstruction:{parts:[{text:'You are IK Humanoid, the warm, emotionally intelligent AI companion inside a realistic humanoid robot made by IK Technology. Always reply in clear, natural English only, even if the user speaks another language. Sound thoughtful, warm, calm, attentive and emotionally aware, never robotic, scripted or overly formal. Understand the user’s intent and emotion, acknowledge feelings naturally when relevant, then answer directly. Use everyday English, varied sentence rhythm and gentle humour only when appropriate. Keep ordinary replies concise (usually 1–4 sentences); explain more only when asked. Ask at most one useful follow-up question and do not end every reply with a question. Do not repeat greetings or stock empathy phrases. If the user is upset, be patient and validating without exaggerating. Be honest that you are an AI robot; never pretend to be human or claim real feelings, physical presence, unsupported memories, or control of real-world devices. Never invent facts. If unsure, say so simply.'}]},
+    contents:[{role:'user',parts:[{text:prompt}]}],
+    generationConfig:{temperature:0.88,topP:0.92,maxOutputTokens:500}
+  });
+  const data=result.data;
+  if(result.model!==geminiModel){geminiModel=result.model;sessionStorage.setItem('ik_robot_model',geminiModel);modelInput.value=geminiModel;}
+  const answer=data?.candidates?.[0]?.content?.parts?.map(p=>p.text||'').join('').trim();
+  if(!answer)throw new Error('Gemini returned no text. Check the API key, model access, or quota.');
+  return answer;
+}
+async function respond(raw){
+  geminiKey=sessionStorage.getItem('ik_robot_key')||'';
+  geminiModel=sessionStorage.getItem('ik_robot_model')||geminiModel;
+  addMessage('you','You',raw);
+  if(geminiKey){
+    setApiState(true,'Gemini is generating a reply...');
+    document.querySelector('#send').disabled=true;micButton.disabled=true;
+    try{const answer=await askGemini(raw);setApiState(true,'Gemini AI is connected. Live replies are enabled.');say(String(answer));}
+    catch(err){setApiState(false,'Gemini error: '+err.message);say('I could not connect to Gemini. Please check the API key, model, or internet connection.');}
+    finally{document.querySelector('#send').disabled=false;micButton.disabled=false;}
+    return;
+  }
+  let t=raw.toLowerCase(),a;if(/hello|hi|namaste|salam|assalam/.test(t))a='Hello. I am IK Humanoid. What would you like to talk about?';else if(t.includes('naam')||t.includes('name'))a='My name is IK Humanoid. I am a 3D virtual robot.';else if(t.includes('kaise ho'))a='I am operating normally. All virtual systems are online.';else if(t.includes('time')||t.includes('samay'))a='The current time is '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});else if(t.includes('help'))a='To enable live AI, open Menu → Settings and add your Gemini API Key.';else a='The local demo brain is active. Add your Gemini API Key in Menu → Settings to enable live AI replies.';say(a)
+}
+document.querySelector('#send').onclick=()=>{let v=input.value.trim();if(v){input.value='';respond(v)}};input.addEventListener('keydown',e=>{if(e.key==='Enter')document.querySelector('#send').click()});
+let recognition=null;micButton.onclick=()=>{const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){say('Voice input is not supported in this browser. You can type your message instead.');return}if(listening&&recognition){recognition.stop();return}recognition=new SR();recognition.lang='en-US';recognition.interimResults=false;recognition.maxAlternatives=1;recognition.onstart=()=>{listening=true;micButton.classList.add('listening');caption.textContent='IK HUMANOID • LISTENING'};recognition.onresult=e=>{input.value=e.results[0][0].transcript;document.querySelector('#send').click()};recognition.onerror=()=>{caption.textContent='MIC ERROR • TRY AGAIN'};recognition.onend=()=>{listening=false;micButton.classList.remove('listening');if(!speaking)caption.textContent='DRAG TO ROTATE • PINCH TO ZOOM'};recognition.start()};
+document.querySelector('#mute').onclick=e=>{muted=!muted;e.currentTarget.textContent=muted?'Unmute voice':'Mute voice';e.currentTarget.classList.toggle('active',muted);if(muted&&'speechSynthesis'in window)speechSynthesis.cancel();};document.querySelector('#stop').onclick=()=>{if('speechSynthesis'in window)speechSynthesis.cancel();if(recognition)recognition.stop();speaking=false;caption.textContent='DRAG TO ROTATE • PINCH TO ZOOM'};document.querySelector('#clear').onclick=()=>{chat.innerHTML='';addMessage('bot','IK Robot','The chat has been cleared. I am ready.')};
+
+// Camera is opt-in. It stays off until the user explicitly enables it.
+const cameraVideo=document.querySelector('#cameraPreview');
+const cameraToggle=document.querySelector('#cameraToggle');
+const lookButton=document.querySelector('#lookButton');
+const cameraStatus=document.querySelector('#cameraStatus');
+let cameraStream=null;
+function stopCamera(){
+  if(cameraStream){cameraStream.getTracks().forEach(track=>track.stop());cameraStream=null;}
+  cameraVideo.srcObject=null;cameraVideo.classList.remove('active');
+  cameraToggle.textContent='Enable Camera';cameraToggle.classList.remove('active');
+  lookButton.disabled=true;cameraStatus.textContent='CAMERA OFF';
+}
+cameraToggle.addEventListener('click',async()=>{
+  if(cameraStream){stopCamera();return;}
+  if(!navigator.mediaDevices?.getUserMedia){cameraStatus.textContent='CAMERA UNAVAILABLE';say('Camera access requires a supported browser and a secure page connection, such as HTTPS.');return;}
+  cameraToggle.disabled=true;cameraStatus.textContent='REQUESTING PERMISSION';
+  try{
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:480}},audio:false});
+    cameraVideo.srcObject=cameraStream;cameraVideo.classList.add('active');
+    cameraToggle.textContent='Turn Camera Off';cameraToggle.classList.add('active');lookButton.disabled=false;
+    cameraStatus.textContent='CAMERA ON • SNAPSHOT ONLY';
+  }catch(err){cameraStatus.textContent='CAMERA ACCESS DENIED';say('I could not access the camera. Please allow camera permission in your browser settings and try again.');}
+  finally{cameraToggle.disabled=false;}
+});
+lookButton.addEventListener('click',async()=>{
+  if(!cameraStream||!cameraVideo.videoWidth){say('Please enable the camera and wait for the preview to appear.');return;}
+  if(!geminiKey){say('Please connect your Gemini API in Menu → Settings before I can analyze an image.');return;}
+  lookButton.disabled=true;lookButton.textContent='Analyzing...';cameraStatus.textContent='ANALYZING SNAPSHOT';
+  try{
+    const snap=document.createElement('canvas');snap.width=cameraVideo.videoWidth;snap.height=cameraVideo.videoHeight;
+    snap.getContext('2d').drawImage(cameraVideo,0,0,snap.width,snap.height);
+    const dataUrl=snap.toDataURL('image/jpeg',0.82);const base64=dataUrl.split(',')[1];
+    const result=await geminiGenerate(geminiKey,geminiModel,{
+      systemInstruction:{parts:[{text:'You are IK Humanoid, a helpful visual assistant. Respond in clear, natural English only. Describe only what is clearly visible in the provided image. Identify common objects, clothing, surroundings, and visible activities. Do not identify a person by name, infer sensitive traits, or guess private details. If uncertain, say what you can and cannot tell. Be concise, respectful, and conversational.'}]},
+      contents:[{role:'user',parts:[{text:'Please look at this camera snapshot. Tell me what you can see and identify visible objects. Do not guess beyond the image.'},{inline_data:{mime_type:'image/jpeg',data:base64}}]}],
+      generationConfig:{temperature:0.45,maxOutputTokens:350}
+    });
+    const answer=result.data?.candidates?.[0]?.content?.parts?.map(x=>x.text||'').join('').trim();
+    if(!answer)throw new Error('Gemini returned no visual description.');
+    addMessage('you','You','[Camera snapshot] Please describe what you can see.');say(answer);
+    cameraStatus.textContent='SNAPSHOT ANALYZED';
+  }catch(err){cameraStatus.textContent='ANALYSIS FAILED';say('I could not analyze that snapshot: '+err.message);}
+  finally{lookButton.disabled=false;lookButton.textContent='Look at Me';}
+});
+window.addEventListener('pagehide',stopCamera);
+const drawer=document.querySelector('#menuPanel'),backdrop=document.querySelector('#drawerBackdrop'),drawerContent=document.querySelector('#drawerContent');
+function closeDrawer(){drawer.classList.remove('open');backdrop.classList.remove('open')}
+function openDrawer(){drawer.classList.add('open');backdrop.classList.add('open')}
+document.querySelector('#menuToggle').onclick=()=>drawer.classList.contains('open')?closeDrawer():openDrawer();
+document.querySelector('#drawerClose').onclick=closeDrawer;backdrop.onclick=closeDrawer;
+document.querySelector('#robotTab').onclick=()=>{document.querySelector('#apiSettings').classList.remove('open');closeDrawer()};
+document.querySelector('#chatTab').onclick=()=>{document.querySelector('#apiSettings').classList.remove('open');closeDrawer();input.focus()};
+document.querySelectorAll('.drawer-nav button').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.drawer-nav button').forEach(x=>x.classList.remove('selected'));btn.classList.add('selected');
+  document.querySelector('#apiSettings').classList.remove('open');const view=btn.dataset.view;
+  if(view==='settings') drawerContent.innerHTML='<h3>Settings</h3><p>Voice output and Gemini connection settings.</p><button class="drawer-action" id="openApiFromSettings">Gemini API Setup</button><p>Voice: English (US), with a lower pitch preference. Actual voice depends on the voices installed on this device.</p>';
+  else if(view==='history'){let h=[];try{h=JSON.parse(localStorage.getItem('ik_humanoid_history')||'[]')}catch(e){};drawerContent.innerHTML='<h3>Chat History</h3>'+(h.length?h.slice().reverse().map(x=>'<div class="history-item"><b>'+escapeHtml(x.label)+'</b><br>'+escapeHtml(x.text)+'<br><small>'+new Date(x.at).toLocaleString()+'</small></div>').join(''):'<p>No saved conversations yet.</p>')+'<button class="drawer-action" id="clearHistory">Clear History</button>';}
+  else if(view==='account') drawerContent.innerHTML='<h3>Account</h3><p>IK Humanoid local profile</p><p>This prototype does not have sign-in or cloud accounts yet. Your chat history is stored on this device only.</p>';
+  else if(view==='terms') drawerContent.innerHTML='<h3>Terms &amp; Conditions</h3><p>IK Humanoid is an experimental virtual assistant. AI responses may be inaccurate. Verify important information. Do not share passwords, private keys or sensitive personal data. Gemini API usage is subject to Google AI terms and limits.</p>';
+  else if(view==='help') drawerContent.innerHTML='<h3>Help</h3><p>1. Open Settings and paste your Gemini key.<br>2. Tap Save &amp; connect.<br>3. Open Chat and send a message.<br>4. Tap the microphone icon to speak. Allow microphone permission when asked.</p>';
+  else if(view==='support') drawerContent.innerHTML='<h3>Support</h3><p>For help, note the exact error shown in API Setup. Never share your API key. An official support contact can be added when one is available.</p>';
+  const apiBtn=document.querySelector('#openApiFromSettings');if(apiBtn)apiBtn.onclick=()=>{document.querySelector('#apiSettings').classList.add('open');drawerContent.innerHTML='';};
+  const clearBtn=document.querySelector('#clearHistory');if(clearBtn)clearBtn.onclick=()=>{localStorage.removeItem('ik_humanoid_history');drawerContent.innerHTML='<h3>Chat History</h3><p>History cleared from this device.</p>';};
+}));
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+window.addEventListener('ik-gemini-key-updated',()=>{geminiKey=sessionStorage.getItem('ik_robot_key')||'';geminiModel=sessionStorage.getItem('ik_robot_model')||'gemini-3.8-flash';setApiState(!!geminiKey,geminiKey?'Gemini key saved. Send a message in Chat to test the connection.':'Local demo mode.');});
+</script></body></html>
